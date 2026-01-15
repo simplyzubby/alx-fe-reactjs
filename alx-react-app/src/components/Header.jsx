@@ -1,4 +1,4 @@
-function WelcomeMessage() {
+function Header() {
     return (
         <div>
            <header>
@@ -8,4 +8,4 @@ function WelcomeMessage() {
     );
 }
 
-export default WelcomeMessage;
+export default Header;
