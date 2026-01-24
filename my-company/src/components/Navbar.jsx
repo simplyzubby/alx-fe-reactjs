@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav>
+    <nav sytle = {{backgroundColor: 'red', display: '', justifyContent: 'left' }}>
       <Link to="/">Home</Link> |{" "}
       <Link to="/about">About</Link> |{" "}
       <Link to="/services">Services</Link> |{" "}
