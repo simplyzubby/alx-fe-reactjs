@@ -1,8 +1,8 @@
 function Footer() {
     return (
-        <div>
+        <div style = {{border: '1px solid gray', padding: '10px', margin: '10px'}}>
      <footer>
-  <p>© 2023 City Lovers</p>
+  <p style = {{color: 'red', fontSize: '16px'}}>© 2023 City Lovers</p>
 </footer>
 </div>
     );
