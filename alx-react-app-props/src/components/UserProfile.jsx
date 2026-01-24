@@ -1,3 +1,8 @@
+import React, { useContext } from "react";
+import UserContext from "../UserContext";
+
+function UserProfile() {
+ const userData = useContext(UserContext);
 const UserProfile = (props) => {
    return (
      <div>
@@ -7,5 +12,5 @@ const UserProfile = (props) => {
      </div>
    );
  };
-
+}
  export default UserProfile;
