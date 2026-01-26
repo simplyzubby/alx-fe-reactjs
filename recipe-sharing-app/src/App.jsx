@@ -1,5 +1,5 @@
 import RecipeList from './components/RecipeList';
-import RecipeForm from './components/RecipeForm';
+import RecipeForm from './components/AddRecipeForm';
 
 const App = () => {
   return (
