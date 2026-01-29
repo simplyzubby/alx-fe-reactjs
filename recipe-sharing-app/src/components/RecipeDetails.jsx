@@ -1,17 +1,28 @@
+import AddRecipeForm from './AddRecipeForm';
 import { useRecipeStore } from './recipeStore';
+import { Link } from 'react-router-dom';
 
-  const RecipeDetails = ({ recipeId }) => {
-    const recipe = useRecipeStore(state =>
-      state.recipes.find(recipe => recipe.id === recipeId)
-    );
+const RecipeList = () => {
+  const recipes = useRecipeStore((state) => state.recipes);
 
-    return (
-      <div>
-        <h1>{recipe.title}</h1>
-        <p>{recipe.description}</p>
-        {/* Render EditRecipeForm and DeleteRecipeButton here */}
-      </div>
-    );
-  };
+  return (
+    <div>
+      <h1>Recipes</h1>
 
-  export default RecipeDetails;
+      <AddRecipeForm />
+
+      {recipes.length === 0 && <p>No recipes yet</p>}
+
+
+      {recipes.map((recipe) => (
+        <div key={recipe.id}>
+          <Link to={`/recipes/${recipe.id}`}>
+            {recipe.title}
+          </Link>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default RecipeList;
