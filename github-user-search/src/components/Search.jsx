@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchUsers } from "../services/githubService";
+import { fetchUserData, searchUsers } from "../services/githubService";
 
 const Search = () => {
   const [username, setUsername] = useState("");
@@ -12,22 +12,32 @@ const Search = () => {
 
   const handleSearch = async (e, loadMore = false) => {
     if (e) e.preventDefault();
+    if (!username && !location && !minRepos) return;
 
     setLoading(true);
     setError("");
 
     try {
-      const data = await searchUsers({
-        username,
-        location,
-        minRepos,
-        page: loadMore ? page + 1 : 1,
-      });
+      let data;
+      // If only username is provided, use fetchUserData (ALX requirement)
+      if (username && !location && !minRepos) {
+        const user = await fetchUserData(username);
+        data = { items: [user] }; // wrap in items array for consistency
+      } else {
+        // Advanced search
+        data = await searchUsers({
+          username,
+          location,
+          minRepos,
+          page: loadMore ? page + 1 : 1,
+        });
+      }
 
       setUsers(loadMore ? [...users, ...data.items] : data.items);
       setPage(loadMore ? page + 1 : 1);
     } catch (err) {
       setError("Looks like we cant find the user");
+      setUsers([]);
     } finally {
       setLoading(false);
     }
@@ -71,11 +81,9 @@ const Search = () => {
         </button>
       </form>
 
-      {/* States */}
       {loading && <p className="text-center">Loading...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
 
-      {/* Results */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {users.map((user) => (
           <div
@@ -102,7 +110,6 @@ const Search = () => {
         ))}
       </div>
 
-      {/* Load More */}
       {users.length > 0 && !loading && (
         <button
           onClick={() => handleSearch(null, true)}
