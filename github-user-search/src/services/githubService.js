@@ -1,23 +1,16 @@
-import axios from "axios";
-
 const BASE_URL = "https://api.github.com";
 
-// Advanced search function (for multiple criteria)
-export const searchUsers = async ({ username, location, minRepos, page = 1 }) => {
-  let query = "";
-  if (username) query += `${username} `;
-  if (location) query += `location:${location} `;
-  if (minRepos) query += `repos:>=${minRepos}`;
-
-  const response = await axios.get(`${BASE_URL}/search/users`, {
-    params: { q: query.trim(), page, per_page: 10 },
-  });
-
-  return response.data;
-};
-
-// Single user fetch function (ALX check expects this)
-export const fetchUserData = async (username) => {
-  const response = await axios.get(`${BASE_URL}/users/${username}`);
-  return response.data;
+// Function to search GitHub users
+export const searchUsers = async (query) => {
+  try {
+    const response = await fetch(`${BASE_URL}/search/users?q=${query}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch users");
+    }
+    const data = await response.json();
+    return data.items; // GitHub returns items array with users
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
