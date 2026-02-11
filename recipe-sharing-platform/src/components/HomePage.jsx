@@ -24,7 +24,7 @@ const HomePage = () => {
       <AddRecipeForm onAddRecipe={handleAddRecipe} />
 
       {/* Recipes Grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+      <div className="grid gap-6 md:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
         {recipes.map((recipe) => (
           <Link key={recipe.id} to={`/recipe/${recipe.id}`}>
             <div className="bg-white rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300">
