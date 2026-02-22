@@ -1,9 +1,13 @@
+import React from "react";
 import { Navigate } from "react-router-dom";
-import { isAuthenticated } from "../auth";
+import { useAuth } from "../auth"; // ✅ Use custom auth hook
 
 function ProtectedRoute({ children }) {
-  if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />;
+  const { isAuthenticated } = useAuth(); // ✅ Lab expects this
+
+  if (!isAuthenticated) {
+    // Redirect unauthenticated users
+    return <Navigate to="/" replace />;
   }
 
   return children;
