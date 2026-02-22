@@ -4,18 +4,31 @@ function RegistrationForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({}); // ✅ Error state
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!username || !email || !password) {
-      alert("All fields are required!");
-      return;
-    }
+
+    const newErrors = {};
+
+    // ✅ Basic validation
+    if (!username) newErrors.username = "Username is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+
+    setErrors(newErrors); // ✅ Set errors state
+
+    // Stop submission if errors exist
+    if (Object.keys(newErrors).length > 0) return;
+
+    // Otherwise, submit form
     console.log({ username, email, password });
+
     // Reset form
     setUsername("");
     setEmail("");
     setPassword("");
+    setErrors({});
   };
 
   return (
@@ -24,27 +37,30 @@ function RegistrationForm() {
         <label>Username:</label>
         <input
           type="text"
-          value={username}             // ✅ Controlled input
+          value={username} // Controlled input
           onChange={(e) => setUsername(e.target.value)}
         />
+        {errors.username && <span style={{ color: "red" }}>{errors.username}</span>}
       </div>
 
       <div>
         <label>Email:</label>
         <input
           type="email"
-          value={email}               // ✅ Controlled input
+          value={email} // Controlled input
           onChange={(e) => setEmail(e.target.value)}
         />
+        {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
       </div>
 
       <div>
         <label>Password:</label>
         <input
           type="password"
-          value={password}            // ✅ Controlled input
+          value={password} // Controlled input
           onChange={(e) => setPassword(e.target.value)}
         />
+        {errors.password && <span style={{ color: "red" }}>{errors.password}</span>}
       </div>
 
       <button type="submit">Register</button>
