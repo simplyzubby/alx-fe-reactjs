@@ -11,6 +11,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
+      <BrowserRouter>
     <div>
       <nav>
         <Link to="/">Home</Link> |{" "}
@@ -36,6 +37,8 @@ function App() {
         <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </div>
+    </BrowserRouter>
+    
   );
 }
 
