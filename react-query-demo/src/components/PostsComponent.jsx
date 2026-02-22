@@ -1,21 +1,22 @@
 import React from "react";
 import { useQuery } from "react-query";
 
+// Fetch posts from JSONPlaceholder
 const fetchPosts = async () => {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  if (!res.ok) {
-    throw new Error("Network response was not ok");
-  }
+  if (!res.ok) throw new Error("Network response was not ok");
   return res.json();
 };
 
 function PostsComponent() {
   const { data, error, isLoading, isError, refetch } = useQuery(
-    "posts",       // ✅ Query key
-    fetchPosts,     // ✅ Fetch function
+    "posts",      // Query key
+    fetchPosts,    // Fetch function
     {
-      refetchOnWindowFocus: true, // ✅ Refetch when window regains focus
-      keepPreviousData: true,     // ✅ Keep previous data while loading new data
+      refetchOnWindowFocus: true,  // Refetch when window regains focus
+      keepPreviousData: true,      // Keep previous data while loading new data
+      cacheTime: 1000 * 60 * 5,    // ✅ Keep cached data for 5 minutes
+      staleTime: 1000 * 60 * 1,    // ✅ Data considered fresh for 1 minute
     }
   );
 
@@ -25,7 +26,7 @@ function PostsComponent() {
   return (
     <div>
       <h2>Posts</h2>
-      <button onClick={refetch}>Refetch Posts</button> {/* Optional manual refetch */}
+      <button onClick={refetch}>Refetch Posts</button>
       <ul>
         {data.map((post) => (
           <li key={post.id}>
