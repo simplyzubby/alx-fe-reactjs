@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import TodoList from "./TodoList";
+import TodoList from "../components/TodoList";
 
 describe("TodoList Component", () => {
   test("renders initial todos", () => {
@@ -10,7 +10,7 @@ describe("TodoList Component", () => {
     expect(screen.getByText("Build Todo App")).toBeInTheDocument();
   });
 
-test("adds a new todo", () => 
+test("adds a new todo", () => {
   render(<TodoList />);
 
   const input = screen.getByPlaceholderText("Add a new todo");
